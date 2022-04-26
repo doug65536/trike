@@ -131,11 +131,20 @@ function trike.control(self, dtime, hull_direction, longit_speed,
         local hull_acc = vector.multiply(hull_direction,self._acceleration)
         retval_accel=vector.add(retval_accel,hull_acc)
 
+        local pitch_up_key, pitch_down_key
+        if self._pitch_up_dir == "up" then
+            pitch_up_key = "up"
+            pitch_down_key = "down"
+        else
+            pitch_up_key = "down"
+            pitch_down_key = "up"
+        end
+
         --wing
         local wing_limit = 10
-		if ctrl.down then
+		if ctrl[pitch_down_key] then
 			self._angle_of_attack = math.max(self._angle_of_attack-10*self.dtime,2)
-		elseif ctrl.up then
+		elseif ctrl[pitch_up_key] then
 			self._angle_of_attack = math.min(self._angle_of_attack+10*self.dtime,wing_limit)
 		end
 

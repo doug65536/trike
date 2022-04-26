@@ -5,6 +5,7 @@ dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_global_definitions.l
 --
 
 trike.vector_up = vector.new(0, 1, 0)
+trike.default_pitch_up = "up"
 
 minetest.register_entity('trike:engine',{
 initial_properties = {
@@ -162,6 +163,7 @@ minetest.register_entity("trike:trike", {
     lastvelocity = nil,
     _inv = nil,
     _inv_id = "",
+    _pitch_up_dir = trike.default_pitch_up,
 
     get_staticdata = function(self) -- unloaded/unloads ... is now saved
         return minetest.serialize({
@@ -172,6 +174,7 @@ minetest.register_entity("trike:trike", {
             stored_power_lever = self._power_lever,
             stored_driver_name = self.driver_name,
             stored_inv_id = self._inv_id,
+            stored_pitch_up_dir = self._pitch_up_dir or trike.default_pitch_up
         })
     end,
 
@@ -190,6 +193,7 @@ minetest.register_entity("trike:trike", {
             self._power_lever = data.stored_power_lever
             self.driver_name = data.stored_driver_name
             self._inv_id = data.stored_inv_id
+            self._pitch_up_dir = data.stored_pitch_up_dir or trike.default_pitch_up
             --minetest.debug("loaded: ", self._energy)
         end
         airutils.setText(self, "ultralight trike")

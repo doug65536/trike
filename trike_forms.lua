@@ -14,13 +14,35 @@ function trike.getPlaneFromPlayer(player)
 end
 
 function trike.pilot_formspec(name)
+    local buttons = {
+        {n="go_out", t="Go Offboard"},
+        {n="hud", t="Show/Hide Gauges"},
+        {n="toggle_up", t=pitch_button},
+    }
+
     local basic_form = table.concat({
         "formspec_version[3]",
-        "size[6,4.5]",
+        "size[6,5.5]",
 	}, "")
 
-	basic_form = basic_form.."button[1,1.0;4,1;go_out;Go Offboard]"
-	basic_form = basic_form.."button[1,2.5;4,1;hud;Show/Hide Gauges]"
+    local player = minetest.get_player_by_name(name)
+    local plane_obj = trike.getPlaneFromPlayer(player)
+    local plane = plane_obj:get_luaentity()
+    local pitch_button = "Toggle pitch up mechanism. Current: "
+    if plane._pitch_up_dir == "up" then
+        pitch_button = pitch_button .. "Forward"
+    else
+        pitch_button = pitch_button .. "Back"
+    end
+
+    for index, button in ipairs(buttons)
+    do
+        local y = 1 + (index - 1) * 1.5
+        basic_form = basic_form ..
+            "button[1," .. y .. ";4,1;" ..
+            button.n .. ";" ..
+            button.t .. "]"
+    end
 
     minetest.show_formspec(name, "trike:pilot_main", basic_form)
 end
@@ -52,6 +74,13 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
             end
             trike.dettachPlayer(ent, player)
 		end
+        if fields.toggle_up then
+            if ent._pitch_up_dir == "up" then
+                ent._pitch_up_dir = "down"
+            else
+                ent._pitch_up_dir = "up"
+            end
+        end
         minetest.close_formspec(name, "trike:pilot_main")
     end
 end)
