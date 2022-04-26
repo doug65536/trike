@@ -14,17 +14,6 @@ function trike.getPlaneFromPlayer(player)
 end
 
 function trike.pilot_formspec(name)
-    local buttons = {
-        {n="go_out", t="Go Offboard"},
-        {n="hud", t="Show/Hide Gauges"},
-        {n="toggle_up", t=pitch_button},
-    }
-
-    local basic_form = table.concat({
-        "formspec_version[3]",
-        "size[6,5.5]",
-	}, "")
-
     local player = minetest.get_player_by_name(name)
     local plane_obj = trike.getPlaneFromPlayer(player)
     local plane = plane_obj:get_luaentity()
@@ -34,6 +23,17 @@ function trike.pilot_formspec(name)
     else
         pitch_button = pitch_button .. "Back"
     end
+
+    local buttons = {
+        {n="go_out", t="Go Offboard"},
+        {n="hud", t="Show/Hide Gauges"},
+        {n="toggle_up", t=pitch_button},
+    }
+
+    local basic_form = table.concat({
+        "formspec_version[3]",
+        "size[6," .. (#buttons * 1.5 + 1.5) .. "]",
+	}, "")
 
     for index, button in ipairs(buttons)
     do
