@@ -21,15 +21,16 @@ trike.colors ={
 
 trike.trunk_slots = 3
 
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_global_definitions.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_crafts.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_control.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_fuel_management.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_custom_physics.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_utilities.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_entities.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_hud.lua")
-dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_forms.lua")
+local trike_mod_path = minetest.get_modpath("trike") .. DIR_DELIM
+dofile(trike_mod_path .. "trike_global_definitions.lua")
+dofile(trike_mod_path .. "trike_crafts.lua")
+dofile(trike_mod_path .. "trike_control.lua")
+dofile(trike_mod_path .. "trike_fuel_management.lua")
+dofile(trike_mod_path .. "trike_custom_physics.lua")
+dofile(trike_mod_path .. "trike_utilities.lua")
+dofile(trike_mod_path .. "trike_entities.lua")
+dofile(trike_mod_path .. "trike_hud.lua")
+dofile(trike_mod_path .. "trike_forms.lua")
 
 --
 -- helpers and co.

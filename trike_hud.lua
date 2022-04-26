@@ -2,30 +2,17 @@ trike.hud_list = {}
 
 function trike.animate_gauge(player, ids, prefix, x, y, angle)
     local angle_in_rad = math.rad(angle + 180)
-    local dim = 10
-    local pos_x = math.sin(angle_in_rad) * dim
-    local pos_y = math.cos(angle_in_rad) * dim
-    player:hud_change(ids[prefix .. "2"], "offset", {x = pos_x + x, y = pos_y + y})
-    dim = 20
-    pos_x = math.sin(angle_in_rad) * dim
-    pos_y = math.cos(angle_in_rad) * dim
-    player:hud_change(ids[prefix .. "3"], "offset", {x = pos_x + x, y = pos_y + y})
-    dim = 30
-    pos_x = math.sin(angle_in_rad) * dim
-    pos_y = math.cos(angle_in_rad) * dim
-    player:hud_change(ids[prefix .. "4"], "offset", {x = pos_x + x, y = pos_y + y})
-    dim = 40
-    pos_x = math.sin(angle_in_rad) * dim
-    pos_y = math.cos(angle_in_rad) * dim
-    player:hud_change(ids[prefix .. "5"], "offset", {x = pos_x + x, y = pos_y + y})
-    dim = 50
-    pos_x = math.sin(angle_in_rad) * dim
-    pos_y = math.cos(angle_in_rad) * dim
-    player:hud_change(ids[prefix .. "6"], "offset", {x = pos_x + x, y = pos_y + y})
-    dim = 60
-    pos_x = math.sin(angle_in_rad) * dim
-    pos_y = math.cos(angle_in_rad) * dim
-    player:hud_change(ids[prefix .. "7"], "offset", {x = pos_x + x, y = pos_y + y})
+    local dim
+    local pos_x
+    local pos_y
+    
+    for pt = 1,7
+    do
+        dim = pt * 10
+        pos_x = math.sin(angle_in_rad) * dim
+        pos_y = math.cos(angle_in_rad) * dim
+        player:hud_change(ids[prefix .. pt], "offset", {x = pos_x + x, y = pos_y + y})
+    end
 end
 
 function trike.update_hud(player, climb, speed, power, fuel)
@@ -72,237 +59,32 @@ function trike.update_hud(player, climb, speed, power, fuel)
             scale     = { x = 0.5, y = 0.5},
             alignment = { x = 1, y = 0 },
         })
-        
-        ids["clb_pt_1"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = clb_gauge_x, y = clb_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
 
-        ids["clb_pt_2"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = clb_gauge_x, y = clb_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["clb_pt_3"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = clb_gauge_x, y = clb_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["clb_pt_4"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = clb_gauge_x, y = clb_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["clb_pt_5"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = clb_gauge_x, y = clb_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["clb_pt_6"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = clb_gauge_x, y = clb_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["clb_pt_7"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = clb_gauge_x, y = clb_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
+        local pts = {
+            {prefix = "clb_pt_", offset = {x = clb_gauge_x, y = clb_gauge_y}},
+            {prefix = "sp_pt_", offset = {x = sp_gauge_x, y = sp_gauge_y}},
+            {prefix = "pwr_pt_", offset = {x = pwr_gauge_x, y = pwr_gauge_y}},
+            {prefix = "fu_pt_", offset = {x = fu_gauge_x, y = fu_gauge_y}}
+        }
+        local scale = { x = 6, y = 6}
+        local alignment = { x = 1, y = 0 }
+        local position = { x = 0, y = 1 }
 
-        ids["sp_pt_1"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = sp_gauge_x, y = sp_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["sp_pt_2"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = sp_gauge_x, y = sp_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["sp_pt_3"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = sp_gauge_x, y = sp_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["sp_pt_4"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = sp_gauge_x, y = sp_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["sp_pt_5"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = sp_gauge_x, y = sp_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["sp_pt_6"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = sp_gauge_x, y = sp_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["sp_pt_7"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = sp_gauge_x, y = sp_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-
-        ids["pwr_pt_1"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = pwr_gauge_x, y = pwr_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-
-        ids["pwr_pt_2"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = pwr_gauge_x, y = pwr_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["pwr_pt_3"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = pwr_gauge_x, y = pwr_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["pwr_pt_4"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = pwr_gauge_x, y = pwr_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["pwr_pt_5"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = pwr_gauge_x, y = pwr_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["pwr_pt_6"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = pwr_gauge_x, y = pwr_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["pwr_pt_7"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = pwr_gauge_x, y = pwr_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-
-        ids["fu_pt_1"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = fu_gauge_x, y = fu_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-
-        ids["fu_pt_2"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = fu_gauge_x, y = fu_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["fu_pt_3"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = fu_gauge_x, y = fu_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["fu_pt_4"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = fu_gauge_x, y = fu_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["fu_pt_5"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = fu_gauge_x, y = fu_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["fu_pt_6"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = fu_gauge_x, y = fu_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
-        ids["fu_pt_7"] = player:hud_add({
-            hud_elem_type = "image",
-            position  = {x = 0, y = 1},
-            offset    = {x = fu_gauge_x, y = fu_gauge_y},
-            text      = "trike_ind_box.png",
-            scale     = { x = 6, y = 6},
-            alignment = { x = 1, y = 0 },
-        })
+        for _, ptinfo in pairs(pts)
+        do
+            for pt = 1,7
+            do
+                local offset = ptinfo["offset"]
+                ids[ptinfo["prefix"] .. pt] = player:hud_add({
+                    hud_elem_type = "image",
+                    position  = position,
+                    offset    = {x = offset["x"], y = offset["y"]},
+                    text      = "trike_ind_box.png",
+                    scale     = scale,
+                    alignment = alignment,
+                })
+            end
+        end
 
         trike.hud_list[player_name] = ids
     end
@@ -319,34 +101,13 @@ function trike.remove_hud(player)
             --player:hud_remove(ids["time"])
             player:hud_remove(ids["title"])
             player:hud_remove(ids["bg"])
-            player:hud_remove(ids["clb_pt_7"])
-            player:hud_remove(ids["clb_pt_6"])
-            player:hud_remove(ids["clb_pt_5"])
-            player:hud_remove(ids["clb_pt_4"])
-            player:hud_remove(ids["clb_pt_3"])
-            player:hud_remove(ids["clb_pt_2"])
-            player:hud_remove(ids["clb_pt_1"])
-            player:hud_remove(ids["sp_pt_7"])
-            player:hud_remove(ids["sp_pt_6"])
-            player:hud_remove(ids["sp_pt_5"])
-            player:hud_remove(ids["sp_pt_4"])
-            player:hud_remove(ids["sp_pt_3"])
-            player:hud_remove(ids["sp_pt_2"])
-            player:hud_remove(ids["sp_pt_1"])
-            player:hud_remove(ids["pwr_pt_7"])
-            player:hud_remove(ids["pwr_pt_6"])
-            player:hud_remove(ids["pwr_pt_5"])
-            player:hud_remove(ids["pwr_pt_4"])
-            player:hud_remove(ids["pwr_pt_3"])
-            player:hud_remove(ids["pwr_pt_2"])
-            player:hud_remove(ids["pwr_pt_1"])
-            player:hud_remove(ids["fu_pt_7"])
-            player:hud_remove(ids["fu_pt_6"])
-            player:hud_remove(ids["fu_pt_5"])
-            player:hud_remove(ids["fu_pt_4"])
-            player:hud_remove(ids["fu_pt_3"])
-            player:hud_remove(ids["fu_pt_2"])
-            player:hud_remove(ids["fu_pt_1"])
+            for pt = 1,7
+            do
+                player:hud_remove(ids["clb_pt_" .. pt])
+                player:hud_remove(ids["sp_pt_" .. pt])
+                player:hud_remove(ids["pwr_pt_" .. pt])
+                player:hud_remove(ids["fu_pt_" .. pt])
+            end
         end
         trike.hud_list[player_name] = nil
     end
