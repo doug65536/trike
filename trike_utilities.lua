@@ -1,7 +1,13 @@
 dofile(minetest.get_modpath("trike") .. DIR_DELIM .. "trike_global_definitions.lua")
 
-function trike.get_hipotenuse_value(point1, point2)
-    return math.sqrt((point1.x - point2.x) ^ 2 + (point1.y - point2.y) ^ 2 + (point1.z - point2.z) ^ 2)
+function trike.get_hypotenuse_value(point1, point2)
+    local dx = point1.x - point2.x
+    local dy = point1.y - point2.y
+    local dz = point1.z - point2.z
+    dx = dx * dx
+    dy = dy * dy
+    dz = dz * dz
+    return math.sqrt(dx + dy + dz)
 end
 
 function trike.dot(v1,v2)
@@ -206,7 +212,7 @@ function trike.testImpact(self, velocity)
             self.object:set_acceleration(self._last_accell)
         end
     end
-    local impact = abs(trike.get_hipotenuse_value(velocity, self.lastvelocity))
+    local impact = abs(trike.get_hypotenuse_value(velocity, self.lastvelocity))
     if impact > 2 then
         --minetest.chat_send_all('impact: '.. impact .. ' - hp: ' .. self.hp_max)
 		local nodeu = mobkit.nodeatpos(mobkit.pos_shift(p,{y=1}))
